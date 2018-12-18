@@ -14,6 +14,16 @@ Local development
 -----------------
 To start it locally, use `bundle exec rackup`
 
+### Rinning with docker
+
+```
+docker build -t sidekiq_dashboard .
+docker run \
+  -p 3000:8080 \
+  -e REDIS_URL="redis://some.host.name:6379" \
+  -e PASSWORD=T0pS3cret \
+  sidekiq_dashboard
+```
 
 License
 -------

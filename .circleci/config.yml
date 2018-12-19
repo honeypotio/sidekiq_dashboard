@@ -87,7 +87,7 @@ jobs:
           command: |
             envsubst < ${HOME}/project/k8s.yml > ${HOME}/patched_k8s.yml
             kubectl apply -f ${HOME}/patched_k8s.yml
-            kubectl rollout status deployment/${PROJECT_NAME}
+            kubectl rollout status deployment/production-${PROJECT_NAME}
 workflows:
   version: 2
   test_build_deploy:

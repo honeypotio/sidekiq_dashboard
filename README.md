@@ -25,6 +25,30 @@ docker run \
   sidekiq_dashboard
 ```
 
+Deploying on GKE
+----------------
+Current k8s.yaml file assumes that it is
+deployed to a cluster having helm on it with
+[cert-manager][] + a `letsencryp-prod` issuer
+configured for generating the ssl certificate.
+
+Configuration is being done through a [configmap][]
+with the name `sidekiq-dashboard`
+
+Example command for creating the configuration:
+```
+kubectl create configmap sidekiq-dashboard \
+  --from-literal staging-projectname-user=admin \
+  --from-literal staging-projectname-password=admin
+  --from-literal staging-projectname-redis_url=redis://10.0.1.1:6379
+```
+
+### Continuous Deployment
+
+Deployment done through [CI](/.circleci/config.yml) everything on
+maser is being built and deployed as "staging"
+and all git tags (v.X.x.x) on the repo are deployed as "production"
+
 License
 -------
 
@@ -41,3 +65,5 @@ The names and logos for Honeypot are trademarks of Honeypot GmbH.
 
 [1]: https://www.honeypot.io?utm_source=github
 [2]: http://sidekiq.org
+[cert-manager]: https://cert-manager.readthedocs.io/en/latest/
+[configmap]: https://cloud.google.com/kubernetes-engine/docs/concepts/configmap

@@ -25,3 +25,12 @@ map '/' do
 
   run Sidekiq::Web
 end
+
+# Unprotected route for k8s default L7 LB health check
+healthz = Proc.new do |env|
+  ['200', {'Content-Type' => 'application/json'}, ['{"ready": true}']]
+end
+
+map '/healthz' do
+  run healthz
+end

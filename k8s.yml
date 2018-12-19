@@ -17,6 +17,13 @@ spec:
       containers:
         - name: ${PROJECT_ENV}-${PROJECT_NAME}
           image: eu.gcr.io/${GOOGLE_PROJECT_ID}/${PROJECT_NAME}:${CIRCLE_SHA1}
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            timeoutSeconds: 5
           env:
           - name: REDIS_URL
             valueFrom:

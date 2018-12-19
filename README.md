@@ -43,11 +43,25 @@ kubectl create configmap sidekiq-dashboard \
   --from-literal staging-projectname-redis_url=redis://10.0.1.1:6379
 ```
 
+In case you are connecting to GCE Memorystore redis make sure
+to [configure custom ip tables][3] for your redis istance reserved IP ranges
+
+```
+git clone https://github.com/bowei/k8s-custom-iptables.git
+cd k8s-custom-iptables/
+TARGETS="10.0.0.0/29 10.0.0.8/29" ./install.sh
+cd ..
+```
+
 ### Continuous Deployment
 
 Deployment done through [CI](/.circleci/config.yml) everything on
 maser is being built and deployed as "staging"
 and all git tags (v.X.x.x) on the repo are deployed as "production"
+
+Example production deployment: `git tag v1.1.1 && git push origin v1.1.1`
+
+
 
 License
 -------
@@ -65,5 +79,6 @@ The names and logos for Honeypot are trademarks of Honeypot GmbH.
 
 [1]: https://www.honeypot.io?utm_source=github
 [2]: http://sidekiq.org
+[3]: https://cloud.google.com/memorystore/docs/redis/connect-redis-instance-gke
 [cert-manager]: https://cert-manager.readthedocs.io/en/latest/
 [configmap]: https://cloud.google.com/kubernetes-engine/docs/concepts/configmap

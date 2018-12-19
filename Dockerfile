@@ -19,5 +19,5 @@ COPY Gemfile Gemfile.lock ./
 RUN bundle install
 COPY config.ru .
 
-CMD ["bundle", "exec", "rackup", "config.ru", "-p", "8080"]
 EXPOSE 8080
+CMD ["bundle", "exec", "rackup", "config.ru", "-p", "8080"]
